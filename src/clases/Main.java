@@ -8,7 +8,7 @@ public class Main {
 		Maestro m = new Maestro("biblioteca.dat");
 		Arbol a = new Arbol();
 		Indice i = new Indice ("indice.dat",a);
-		Registro r = new Registro();
+		//Registro r = new Registro();
 		Scanner s = new Scanner(System.in);
 		int opcion = 1;
 		/*
@@ -60,12 +60,13 @@ public class Main {
 			System.out.println("Que llave deseas buscar ? ");
 			int llave = s.nextInt();
 			long pos =  a.buscar(llave);
-			if (pos != 0) {
+			if (pos != -1) {
 				m.leerAleatorio(pos);
 			}else{
 				System.out.println("No se encontro esa llave");
 			}
 			System.out.println("Deseas hacer otra busqueda ? 1= si, 2 = no ");
+			opcion = s.nextInt();
 		}while (opcion == 1);
 		
 	}
