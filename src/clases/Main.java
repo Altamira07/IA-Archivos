@@ -67,18 +67,25 @@ public class Main {
 	public void buscar ()
 	{
 		int opcion = 0;
+		int llave = 0;
 		long dirLogica;
 		do{
 			imprime ("Que llave deseas buscar ? ");
+			llave = teclado.nextInt();
+			imprime("Como deseas hacerlo ? 1: aleatorio, 2: secuencial");
 			opcion = teclado.nextInt();
-			dirLogica = arbol.buscar(opcion);
-			if(dirLogica != -1)
-				maestro.leerAleatorio(dirLogica);
+			if(opcion == 2)
+				maestro.busquedaSecuencial(llave);
 			else
-				imprime("Esa llave no se encuentra");
+			{
+				dirLogica = arbol.buscar(opcion);
+				if(dirLogica != -1)
+					maestro.leerAleatorio(dirLogica);
+				else
+					imprime("Esa llave no se encuentra :( ");
+			}
 			imprime("Deseas hacer otra busqueda? 1: si, 2: no");
 			opcion = teclado.nextInt();
-			
 		}while(opcion == 1);
 	}
 	
