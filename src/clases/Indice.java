@@ -29,12 +29,12 @@ public class Indice extends Archivo
 		long dirLogica;
 		try {
 			archivo = new RandomAccessFile(nombre, "r");
-			System.out.println("Leyendo indice y cargando al arbol");
+			//System.out.println("Leyendo indice y cargando al arbol");
 			while (archivo.getFilePointer() != archivo.length())
 			{
 				llave = archivo.readInt();
 				dirLogica = archivo.readLong();
-				System.out.println("llave = "+llave +" dirLogica "+dirLogica);
+				//System.out.println("llave = "+llave +" dirLogica "+dirLogica);
 				arbol.insertar(llave, dirLogica);
 			}
 			archivo.close();

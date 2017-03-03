@@ -2,7 +2,7 @@ package clases;
 
 public class Arbol {
 	Nodo raiz = null;
-	
+	int ultimo;
 	public void insertar (int llave, long dirLogica)
 	{
 		Nodo nuevo;
@@ -11,7 +11,7 @@ public class Arbol {
 		if (raiz == null) 
 		{
 			raiz = new Nodo(llave, dirLogica);
-			System.out.println("valor insertado \n ");
+			//System.out.println("valor insertado \n ");
 		}else{
 			nuevo = new Nodo(llave, dirLogica);
 			rec = raiz;
@@ -27,17 +27,20 @@ public class Arbol {
 				ant.izq = nuevo;
 			else
 				ant.der = nuevo;
+			
 		}
+		ultimo = llave;
 	}
 	
 	public long buscar(int llave)
 	{
-		long posicion = 0;
+		long posicion = -1;
 		Nodo rec;
 		Nodo ant;
 		if(raiz == null)
 			System.out.println("En este momento el arbol se encuentra vacio :( ");
-		else{
+		else
+		{
 			rec = raiz;
 			ant = raiz;
 			while ((ant.llave!= llave) && (rec!= null))
@@ -51,11 +54,9 @@ public class Arbol {
 			if (ant.llave == llave){
 				System.out.println("El valo se encuentra en el arbol "+ant.llave);
 				posicion = ant.dirlogica;
-			}else{
+			}else
 				System.out.println("El valor no se encuentra en el arbol :(");
-			}
 		}
-		
 		return posicion;
 	}
 	
