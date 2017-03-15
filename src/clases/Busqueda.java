@@ -6,15 +6,22 @@ import java.util.Queue;
 
 public class Busqueda 
 {
-	String matriz_adyacencia [][]= {
+	String matriz_adyacencia [][]; 
+	/*= {
 			{"a","1","0","0","1","0",},
 			{"1","b","1","0","1","0",},
 			{"0","1","c","1","0","0",},
 			{"0","0","1","d","1","1",},
 			{"1","1","0","1","e","0",},
 			{"0","0","0","1","0","f",}
-			};
-	
+			};*/
+	public Busqueda (String matriz[][])
+	{
+		matriz_adyacencia = matriz;
+	}
+	public Busqueda (){
+		
+	}
 	public void busquedaAnchura()
 	{
 		Queue<String> secuencia = new LinkedList<>();

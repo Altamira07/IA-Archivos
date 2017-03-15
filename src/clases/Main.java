@@ -1,5 +1,8 @@
 package clases;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.Scanner;
 
 public class Main {
@@ -7,6 +10,7 @@ public class Main {
 	Maestro maestro;
 	Arbol arbol;
 	Indice indice ;
+	int tamanoRegisto = 6;
 	public static void main (String args[])
 	{
 		new Main();
@@ -26,8 +30,9 @@ public class Main {
 		do{
 			imprime("Que deseas hacer?");
 			imprime("1: Buscar registro ");
-			imprime("2: Agregar registro ");
-			imprime("3: Salir");
+			imprime("2: Realizar busqueda sobre le grafo");
+			imprime("3: Agrgar un nuevo grafo desde archivo externo");
+			imprime("4: Salir");
 			opcion = teclado.nextInt();
 			switch(opcion)
 			{
@@ -35,34 +40,29 @@ public class Main {
 				buscar();
 				break;
 			case 2: 
-				agregar();
-				arbol.raiz = null;
-				indice.leerSecuencial();
+				busquedaGrafo();
+				break;
+			case 3:
+				cargarMatriz();
 				break;
 			default:
-				opcion =3;
+				opcion =4;
 			}
-		}while (opcion != 3);
+		}while (opcion != 4);
 			
 	}
-	public void agregar ()
+	public void agregar(String[] registro, int llave)
 	{
-		int opcion = 0;
-		do{
-			Registro nuevo = new Registro();
-			long posicion;
-			nuevo.llave = arbol.ultimo+1;
-			imprime("Llave del ultimo registro"+nuevo.llave);
-			imprime("Origen");
-			nuevo.origen = teclado.next().charAt(0);
-			imprime("Destino");
-			nuevo.destino = teclado.next().charAt(0);
-			posicion = maestro.escribir(nuevo);
-			indice.escribir(nuevo.llave, posicion);
-			imprime("Se agrego con exito");
-			imprime("Otro registro ? 1: si, 2:No");
-			opcion = teclado.nextInt();
-		}while(opcion == 1);
+		long posicion;
+		posicion = maestro.escribir(registro,llave);
+		indice.escribir(llave, posicion);
+	}
+	public void busquedaGrafo()
+	{
+		Busqueda busqueda = new Busqueda();
+		String matriz [][] = maestro.cargarMatriz(tamanoRegisto);
+		busqueda.matriz_adyacencia = matriz;
+		busqueda.busquedaAnchura();
 	}
 	public void buscar ()
 	{
@@ -75,12 +75,12 @@ public class Main {
 			imprime("Como deseas hacerlo ? 1: aleatorio, 2: secuencial");
 			opcion = teclado.nextInt();
 			if(opcion == 2)
-				maestro.busquedaSecuencial(llave);
+				maestro.busquedaSecuencial(llave,tamanoRegisto);
 			else
 			{
-				dirLogica = arbol.buscar(opcion);
+				dirLogica = arbol.buscar(llave);
 				if(dirLogica != -1)
-					maestro.leerAleatorio(dirLogica);
+					maestro.leerAleatorio(dirLogica,tamanoRegisto);
 				else
 					imprime("Esa llave no se encuentra :( ");
 			}
@@ -92,5 +92,28 @@ public class Main {
 	public void imprime(String mensaje)
 	{
 		System.out.println(mensaje);
+	}
+	
+	public void cargarMatriz()
+	{
+		try{
+			File archivo = new File("matriz.txt");
+			FileReader fr = new FileReader(archivo);
+			BufferedReader br = new BufferedReader(fr);
+			String linea="";
+			String registro[];
+			int llave = 1;
+			while ((linea = br.readLine()) != null)
+			{
+				registro = linea.split("-");
+				tamanoRegisto = registro.length;
+				agregar(registro,llave);
+				llave ++;
+			}
+			
+		}catch(Exception ex){
+			
+		}
+		
 	}
 }
